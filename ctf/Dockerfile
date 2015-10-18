@@ -1,18 +1,32 @@
 # run with:
-# docker run -it -p 2222:22 --rm -v /share:/share superr4y/ctf
+# docker run -it -p 2222:22 --rm -v ~/share:/home/user/share superr4y/ctf
 
 FROM ubuntu:latest
 MAINTAINER superr4y
 EXPOSE 2222
 
+
+
 # install all tools
-RUN apt-get update && apt-get install -y git python2.7 nmap tmux gdb vim openssh-server openjdk-7-jre firefox binutils build-essential
+RUN apt-get update && apt-get install -y git python2.7 nmap tmux gdb vim openssh-server openjdk-7-jre firefox binutils build-essential postgresql libpcap-dev zlib1g-dev curl libc6-i386
 
 # config root files
 # ...
 
+# ruby rvm 
+# RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+# RUN \curl -sSL https://get.rvm.io | bash -s stable
+# RUN source /etc/profile.d/rvm.sh
+# RUN rvm install ruby-2.1.7-dev
 
 
+# metasploit
+# RUN /etc/init.d/postgresql start && su postgres -c "psql -c \"CREATE USER msf WITH PASSWORD 'msf';\"" && su postgres -c "createdb -O msf msf"
+# RUN git clone https://github.com/rapid7/metasploit-framework.git /opt/metasploit-framework
+# WORKDIR /opt/metasploit-framework
+# RUN gem install bundler
+# RUN bundle install
+# WORKDIR /
 
 # add user
 RUN adduser --disabled-password --gecos '' user
@@ -20,8 +34,15 @@ RUN adduser user sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 USER user
-RUN cd ~/
+WORKDIR /home/user
 VOLUME /home/user/share
+
+
+
+WORKDIR /home/user
+RUN curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
+RUN chmod +x msfinstall
+RUN ./msfinstall
 
 
 

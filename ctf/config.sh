@@ -34,5 +34,21 @@ autocmd FileType c map <F5> :w<CR>:!gcc % -o %.bin;./%.bin<CR>
 autocmd FileType go map <F5> :w<CR>:!./make.sh "%"<CR>
 EOF
 
+
+sudo cat >> /etc/metasploitdb.yml << EOF
+production:
+    adapter: postgresql
+    database: msf
+    username: msf
+    password: msf
+    host: 127.0.0.1
+    port: 5432
+    pool: 75
+    timeout: 5
+EOF
+
+
+
+
 mkdir ~/.ssh
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDocmoY6maNNQr4gTvyOD0mbOCxXwtl+7pu9pjElNDxRj5pshjSVa2YlRrWfNn9pdukbn/zPN57DtsL2A1mmlxQ5z6X3/d/aBryFRsc49gQIohXh4DtQtnOgvHv5mBfWgAK44UrfUvW5emcTp3gT5PBL4/oWbaK6aJsgL+rC+5ERBWriWoU1iySBaJUH29an8aKat039RE6uC4s2UevqJOvMWn8FQecfwQjBmHDzITkFp0bPATuihvc/EzHcZhOHN8VwZtpWTqNj5YANIaeV/8/eANk8ITBZN4VV9hPbzBYS5kaCzdhIDc7bAutoK+td7+hWOjOVV+qMJuVvlr6cmIH user@t440p" >> ~/.ssh/authorized_keys
