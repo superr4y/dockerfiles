@@ -8,7 +8,7 @@ EXPOSE 2222
 
 
 # install all tools
-RUN apt-get update && apt-get install -y git python2.7 nmap tmux gdb vim openssh-server openjdk-7-jre firefox binutils build-essential postgresql libpcap-dev zlib1g-dev curl libc6-i386
+RUN apt-get update && apt-get install -y git python2.7 nmap tmux gdb vim openssh-server openjdk-7-jre firefox binutils build-essential postgresql libpcap-dev zlib1g-dev curl libc6-i386 python-pip
 
 # config root files
 # ...
@@ -67,11 +67,11 @@ RUN chmod +x /home/user/bin/checksec.sh
 RUN git clone https://github.com/radare/radare2 /home/user/bin/radare2
 RUN /home/user/bin/radare2/sys/install.sh
 
-
 COPY config.sh /home/user/config.sh
 RUN /home/user/config.sh
 
-
+# vivisect (vdb/vtrace)
+RUN git clone https://github.com/vivisect/vivisect /home/user/bin/vivisect
 
 # start container
 COPY start.sh /home/user/start.sh
