@@ -73,6 +73,17 @@ RUN /home/user/config.sh
 # vivisect (vdb/vtrace)
 RUN git clone https://github.com/vivisect/vivisect /home/user/bin/vivisect
 
+# unicorn
+RUN git clone https://github.com/unicorn-engine/unicorn /home/user/bin/unicorn
+RUN sudo apt-get install -y libglib2.0-dev
+RUN cd /home/user/bin/unicorn && sudo ./make.sh install 
+RUN cd /home/user/bin/unicorn/bindings/python && sudo make install
+
+# capstone
+RUN git clone https://github.com/aquynh/capstone /home/user/bin/capstone
+RUN cd /home/user/bin/capstone && sudo ./make.sh install
+RUN cd /home/user/bin/capstone/bindings/python && make && sudo make install
+
 # start container
 COPY start.sh /home/user/start.sh
 CMD /home/user/start.sh
